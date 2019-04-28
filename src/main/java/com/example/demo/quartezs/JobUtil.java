@@ -56,6 +56,7 @@ public class JobUtil {
     public String getJobState(String jobName, String jobGroup) throws SchedulerException {
         TriggerKey triggerKey = new TriggerKey(jobName, jobGroup);
         return scheduler.getTriggerState(triggerKey).name();
+        //TODO JobStoreSupport
     }
 
     //暂停所有任务
