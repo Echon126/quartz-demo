@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -32,7 +33,7 @@ public class RedisConfig {
 
 
     @Bean
-    public Jackson2JsonRedisSerializer<Object> jacksom2JsonSerializer(){
+    public Jackson2JsonRedisSerializer<Object> jacksom2JsonSerializer() {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(
                 Object.class);
 
@@ -70,19 +71,20 @@ public class RedisConfig {
 
         return template;
     }
+
     /**
      * 消息监听器，使用MessageAdapter可实现自动化解码及方法代理
      *
      * @return
      */
     @Bean
-    public MessageListenerAdapter listener(Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer,
-                                           SimpleMessageSubscriber subscriber) {
+    public MessageListenerAdapter listener(Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer, SimpleMessageSubscriber subscriber) {
         MessageListenerAdapter adapter = new MessageListenerAdapter(subscriber, "onMessage");
         adapter.setSerializer(jackson2JsonRedisSerializer);
         adapter.afterPropertiesSet();
         return adapter;
     }
+
     /**
      * 将订阅器绑定到容器
      *
@@ -91,9 +93,7 @@ public class RedisConfig {
      * @return
      */
     @Bean
-    public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-                                                   MessageListenerAdapter listener) {
-
+    public RedisMessageListenerContainer container(LettuceConnectionFactory connectionFactory, MessageListenerAdapter listener) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.addMessageListener(listener, new PatternTopic("/redis/*"));

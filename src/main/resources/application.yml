@@ -22,7 +22,8 @@ spring:
     password:
     port: 6379
     ssl: false
-    pool:
+    lettuce:
+      pool:
         max-active: 10
-        max-idle: 10
-        max-wait: 600000
+        min-idle: 10
+        max-wait: 60000
