@@ -1,14 +1,5 @@
 package com.example.demo.els;
 
-import com.dangdang.ddframe.job.api.simple.SimpleJob;
-import com.dangdang.ddframe.job.config.JobCoreConfiguration;
-import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
-import com.dangdang.ddframe.job.lite.api.JobScheduler;
-import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
-import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
-import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -26,7 +17,7 @@ public class MyJobConfig {
     private final int shardingTotalCount = 3;
     private final String shardingItemParameters = "0=A,1=B,2=C";
     private final String jobParameters = "parameter";
-
+/*
     @Autowired
     private ZookeeperRegistryCenter regCenter;
 
@@ -55,5 +46,5 @@ public class MyJobConfig {
         LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).build();
         return simpleJobRootConfig;
 
-    }
+    }*/
 }
